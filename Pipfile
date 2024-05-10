@@ -1,0 +1,22 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+ipykernel = "*"
+setuptools = "*"
+pyprojroot = "*"
+pathlib = "*"
+pandas = "*"
+numpy = "*"
+requests = "*"
+plotly = "*"
+nbformat = "*"
+openpyxl = "*"
+scraper-portlet = {editable = true, path = "."}
+
+[dev-packages]
+
+[requires]
+python_version = "*"
