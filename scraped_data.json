@@ -1,0 +1,122 @@
+[
+    {
+        "procedimiento": "LICITACION PUBLICA",
+        "fecha_procedimiento": "10/2024",
+        "estado": "Vigente",
+        "codigo_sigaf": "07/05/2024",
+        "fecha_publicaci\u00f3n": "06/06/2024 07:00:00 AM",
+        "fecha_cierre": "07/05/2024 10:25:01 AM",
+        "ultima_actualizaci\u00f3n": "Alcald\u00eda Villanueva (Alcald\u00eda Villanueva)",
+        "alcald\u00eda": "Oficina de Adquisiciones Municipales",
+        "concepto": "Servicios de construcci\u00f3n de edificaciones residenciales (72110000)",
+        "descripci\u00f3n": "CONSTRUCCION DE 16 VIVIENDAS PROYECTO BISMARCK MARTINEZ"
+    },
+    {
+        "procedimiento": "LICITACION PUBLICA",
+        "fecha_procedimiento": "5/2024",
+        "estado": "Vigente",
+        "codigo_sigaf": "29/04/2024",
+        "fecha_publicaci\u00f3n": "29/05/2024 03:00:00 PM",
+        "fecha_cierre": "29/04/2024 11:12:57 AM",
+        "ultima_actualizaci\u00f3n": "Alcald\u00eda Chichigalpa (Alcald\u00eda Chichigalpa)",
+        "alcald\u00eda": "UA Chichigalpa",
+        "concepto": "Estructuras y edificios permanentes (95120000)",
+        "descripci\u00f3n": "PROYECTO CONSTRUCCION DE VIVIENDAS, PROGRAMA BISMARCK MARTINEZ II ETAPA"
+    },
+    {
+        "procedimiento": "CONTRATACION SIMPLIFICADA",
+        "fecha_procedimiento": "4/2024",
+        "estado": "Ejecuci\u00f3n",
+        "codigo_sigaf": "12/04/2024",
+        "fecha_publicaci\u00f3n": "15/04/2024 10:00:00 AM",
+        "fecha_cierre": "02/05/2024 09:05:57 AM",
+        "ultima_actualizaci\u00f3n": "Alcald\u00eda Yalag\u00fcina (Alcald\u00eda Yalag\u00fcina)",
+        "alcald\u00eda": "Unidad de Adquisiciones Yalag\u00fcina",
+        "concepto": "Parcelas de tierra (95100000)",
+        "descripci\u00f3n": "Adquisici\u00f3n de Terreno para acceso a Lotificacion Bismarck Martinez"
+    },
+    {
+        "procedimiento": "CONTRATACION SIMPLIFICADA",
+        "fecha_procedimiento": "33/2024",
+        "estado": "Ejecuci\u00f3n",
+        "codigo_sigaf": "23/02/2024",
+        "fecha_publicaci\u00f3n": "26/02/2024 11:30:00 AM",
+        "fecha_cierre": "05/03/2024 03:46:10 PM",
+        "ultima_actualizaci\u00f3n": "Alcald\u00eda San Ram\u00f3n (Alcald\u00eda San Ram\u00f3n)",
+        "alcald\u00eda": "Unidad de Adquisici\u00f3n SAN RAMON",
+        "concepto": "Servicios inmobiliarios (80130000), Parcelas de tierra (95100000)",
+        "descripci\u00f3n": "ADQUISICION DE TERRENO PARA LOTIFICACION PROGRAMA NACIONAL BISMARCK MARTINEZ"
+    },
+    {
+        "procedimiento": "CONTRATACION SIMPLIFICADA",
+        "fecha_procedimiento": "3/2024",
+        "estado": "Ejecuci\u00f3n",
+        "codigo_sigaf": "01/02/2024",
+        "fecha_publicaci\u00f3n": "09/02/2024 10:30:00 AM",
+        "fecha_cierre": "16/02/2024 02:07:07 PM",
+        "ultima_actualizaci\u00f3n": "Alcald\u00eda Chichigalpa (Alcald\u00eda Chichigalpa)",
+        "alcald\u00eda": "UA Chichigalpa",
+        "concepto": "Parcelas de tierra (95100000)",
+        "descripci\u00f3n": "PROYECTO COMPRA DE TERRENO PARA BIEN SOCIAL, PROGRAMA BISMARCK MARTINEZ III ETAPA."
+    },
+    {
+        "procedimiento": "LICITACION PUBLICA",
+        "fecha_procedimiento": "10/2024",
+        "estado": "Vigente",
+        "codigo_sigaf_fecha_pub": "07/05/2024",
+        "fecha_cierre": "06/06/2024 07:00:00 AM",
+        "\u00faltima_actualizaci\u00f3n": "07/05/2024 10:25:01 AM",
+        "alcald\u00eda": "Alcald\u00eda Villanueva (Alcald\u00eda Villanueva)",
+        "unidad": "Oficina de Adquisiciones Municipales",
+        "concepto": "Servicios de construcci\u00f3n de edificaciones residenciales (72110000)",
+        "descripci\u00f3n": "CONSTRUCCION DE 16 VIVIENDAS PROYECTO BISMARCK MARTINEZ"
+    },
+    {
+        "procedimiento": "LICITACION PUBLICA",
+        "fecha_procedimiento": "5/2024",
+        "estado": "Vigente",
+        "codigo_sigaf_fecha_pub": "29/04/2024",
+        "fecha_cierre": "29/05/2024 03:00:00 PM",
+        "\u00faltima_actualizaci\u00f3n": "29/04/2024 11:12:57 AM",
+        "alcald\u00eda": "Alcald\u00eda Chichigalpa (Alcald\u00eda Chichigalpa)",
+        "unidad": "UA Chichigalpa",
+        "concepto": "Estructuras y edificios permanentes (95120000)",
+        "descripci\u00f3n": "PROYECTO CONSTRUCCION DE VIVIENDAS, PROGRAMA BISMARCK MARTINEZ II ETAPA"
+    },
+    {
+        "procedimiento": "CONTRATACION SIMPLIFICADA",
+        "fecha_procedimiento": "4/2024",
+        "estado": "Ejecuci\u00f3n",
+        "codigo_sigaf_fecha_pub": "12/04/2024",
+        "fecha_cierre": "15/04/2024 10:00:00 AM",
+        "\u00faltima_actualizaci\u00f3n": "02/05/2024 09:05:57 AM",
+        "alcald\u00eda": "Alcald\u00eda Yalag\u00fcina (Alcald\u00eda Yalag\u00fcina)",
+        "unidad": "Unidad de Adquisiciones Yalag\u00fcina",
+        "concepto": "Parcelas de tierra (95100000)",
+        "descripci\u00f3n": "Adquisici\u00f3n de Terreno para acceso a Lotificacion Bismarck Martinez"
+    },
+    {
+        "procedimiento": "CONTRATACION SIMPLIFICADA",
+        "fecha_procedimiento": "33/2024",
+        "estado": "Ejecuci\u00f3n",
+        "codigo_sigaf_fecha_pub": "23/02/2024",
+        "fecha_cierre": "26/02/2024 11:30:00 AM",
+        "\u00faltima_actualizaci\u00f3n": "05/03/2024 03:46:10 PM",
+        "alcald\u00eda": "Alcald\u00eda San Ram\u00f3n (Alcald\u00eda San Ram\u00f3n)",
+        "unidad": "Unidad de Adquisici\u00f3n SAN RAMON",
+        "concepto": "Servicios inmobiliarios (80130000), Parcelas de tierra (95100000)",
+        "descripci\u00f3n": "ADQUISICION DE TERRENO PARA LOTIFICACION PROGRAMA NACIONAL BISMARCK MARTINEZ"
+    },
+    {
+        "procedimiento": "CONTRATACION SIMPLIFICADA",
+        "fecha_procedimiento": "3/2024",
+        "estado": "Ejecuci\u00f3n",
+        "codigo_sigaf_fecha_pub": "01/02/2024",
+        "fecha_cierre": "09/02/2024 10:30:00 AM",
+        "\u00faltima_actualizaci\u00f3n": "16/02/2024 02:07:07 PM",
+        "alcald\u00eda": "Alcald\u00eda Chichigalpa (Alcald\u00eda Chichigalpa)",
+        "unidad": "UA Chichigalpa",
+        "concepto": "Parcelas de tierra (95100000)",
+        "descripci\u00f3n": "PROYECTO COMPRA DE TERRENO PARA BIEN SOCIAL, PROGRAMA BISMARCK MARTINEZ III ETAPA."
+    }
+]
