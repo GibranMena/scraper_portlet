@@ -64,7 +64,7 @@ action2 = ActionChains(driver)
 #second_element = driver.find_element(By.CSS_SELECTOR, '.menubar .menubar li+ li a')
 
 # Hover over the second element
-action2.move_to_element(second_element).click().perform()
+#action2.move_to_element(second_element).click().perform()
 
 second_hover_element = driver.find_element(By.CSS_SELECTOR, '.menubar .menubar li+ li a')
 
