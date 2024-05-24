@@ -1,4 +1,3 @@
-
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
@@ -68,6 +67,25 @@ checkbox3.click()
 checkbox4 = driver.find_element(By.XPATH, "/html/body/div[4]/table/tbody/tr[3]/td/table/tbody/tr[2]/td[2]/table/tbody/tr/td/div/div/div/table[2]/tbody/tr/td/form/table[2]/tbody/tr[29]/td[2]/input")
 checkbox4.click()
 
+# Select the  year from 19 to 14
+# Find the dropdown menu using the full XPATH
+dropdown_element = driver.find_element(By.XPATH, "/html/body/div[4]/table/tbody/tr[3]/td/table/tbody/tr[2]/td[2]/table/tbody/tr/td/div/div/div/table[2]/tbody/tr/td/form/table[1]/tbody/tr[3]/td[3]/span/select")
+
+# Wrap the element in a Select object
+dropdown = Select(dropdown_element)
+
+# Select the option by index (indexing starts from 0, so 19th option is index 18)
+dropdown.select_by_index(19)
+
+## Find the dropdown menu using the full XPATH
+dropdown_element2 = driver.find_element(By.XPATH, "/html/body/div[4]/table/tbody/tr[3]/td/table/tbody/tr[2]/td[2]/table/tbody/tr/td/div/div/div/table[2]/tbody/tr/td/form/table[2]/tbody/tr[8]/td[2]/select")
+
+# Wrap the element in a Select object
+dropdown = Select(dropdown_element2)
+
+# Select the option by visible text
+dropdown.select_by_visible_text("Alcaldía Managua")
+
 # Hit the Search button using full XPath
 element4 = driver.find_element(By.XPATH, "/html/body/div[4]/table/tbody/tr[3]/td/table/tbody/tr[2]/td[2]/table/tbody/tr/td/div/div/div/table[2]/tbody/tr/td/form/table[3]/tbody/tr/td[1]/input")
 element4.click()
@@ -77,18 +95,8 @@ element4.click()
 # Wait until the contents are loaded
 WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.XPATH, "/html/body/div[4]/table/tbody/tr[3]/td/table/tbody/tr[2]/td[2]/table/tbody/tr/td/div/div/div/form[2]/table[1]/tbody/tr[3]/td/table")))
 
-# Initialize CSV file and writer
-#csv_file = open('scraped_data.csv', 'a', newline='', encoding='utf-8')
-#csv_writer = csv.writer(csv_file)
-
 # Scrape the visible content using full XPath
 scraped_content = driver.find_element(By.XPATH, "/html/body/div[4]/table/tbody/tr[3]/td/table/tbody/tr[2]/td[2]/table/tbody/tr/td/div/div/div/form[2]/table[1]/tbody/tr[3]/td").text
-
-# Write the scraped content to the CSV file
-#csv_writer.writerow([scraped_content])
-
-# Close the CSV file
-#csv_file.close()
 
 # Quit the driver
 driver.quit()
@@ -130,7 +138,6 @@ def parse_text(scraped_text):
         }
         data_list.append(data)
     return data_list  # Moved return statement outside the loop
-
 # Function to save data to a JSON file
 def save_to_json(data, filepath='scraped_data.json'):
     try:

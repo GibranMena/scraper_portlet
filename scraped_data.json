@@ -118,5 +118,29 @@
         "unidad": "UA Chichigalpa",
         "concepto": "Parcelas de tierra (95100000)",
         "descripci\u00f3n": "PROYECTO COMPRA DE TERRENO PARA BIEN SOCIAL, PROGRAMA BISMARCK MARTINEZ III ETAPA."
+    },
+    {
+        "procedimiento": "LICITACION PUBLICA",
+        "fecha_procedimiento": "90/2023",
+        "estado": "Ejecuci\u00f3n",
+        "codigo_sigaf_fecha_pub": "06/03/2023",
+        "fecha_cierre": "05/04/2023 09:00:00 AM",
+        "\u00faltima_actualizaci\u00f3n": "09/06/2023 05:35:44 PM",
+        "alcald\u00eda": "Alcald\u00eda Managua (Alcald\u00eda Managua)",
+        "unidad": "Unidad de Adquisici\u00f3n MANAGUA",
+        "concepto": "CONSTRUCCIONES EN PROCESO (95900000)",
+        "descripci\u00f3n": "PROGRAMA DE VIVIENDAS SOCIAL BISMARCK MARTINEZ FASE 1 DEL PROYECTO DE ASISTENCIA DE CONTRUCCION DE VIVIENDA DE INTERES SOCIAL PARA LA REPUBLICA DE NICARAGUA (COMPONENTE OBRAS DE DESCAPOTE Y DESALOJO)"
+    },
+    {
+        "procedimiento": "LICITACION PUBLICA",
+        "fecha_procedimiento": "49/2023",
+        "estado": "Ejecuci\u00f3n",
+        "codigo_sigaf_fecha_pub": "06/02/2023",
+        "fecha_cierre": "08/03/2023 11:00:00 AM",
+        "\u00faltima_actualizaci\u00f3n": "29/03/2023 04:14:24 PM",
+        "alcald\u00eda": "Alcald\u00eda Managua (Alcald\u00eda Managua)",
+        "unidad": "Unidad de Adquisici\u00f3n MANAGUA",
+        "concepto": "Estructuras y edificios permanentes (95120000)",
+        "descripci\u00f3n": "PROGRAMA BISMARCK MARTINEZ, VIVIENDA SOCIAL \u201cURBANIZACION VILLA JERUSALEN III ETAPA, II FASE\u201d"
     }
 ]
