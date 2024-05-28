@@ -32,7 +32,7 @@ driver = webdriver.Chrome(service=service, options=options)
 driver.get("https://www.gestion.nicaraguacompra.gob.ni/siscae/portal/adquisiciones-gestion/busqueda?accion=todos&usr_ua_id=todos")
 
 
-# Click on the first link
+# Click on the first link for Advanced Search
 
 element = driver.find_element(By.CSS_SELECTOR, "#busqSimpleForm\:Pluto__adquisiciones_gestion_portlet_busquedaProcedimientoPortlet__id22")
 element.click()
@@ -41,9 +41,11 @@ element.click()
 element2 = driver.find_element(By.XPATH, "/html/body/div[4]/table/tbody/tr[3]/td/table/tbody/tr[2]/td[2]/table/tbody/tr/td/div/div/div/table[2]/tbody/tr/td/form/div/table/tbody/tr/td[4]/select/option[4]")
 element2.click()
 
-# Find the element for year of results using XPath and click it
-element3 = driver.find_element(By.XPATH, "/html/body/div[4]/table/tbody/tr[3]/td/table/tbody/tr[2]/td[2]/table/tbody/tr/td/div/div/div/table[2]/tbody/tr/td/form/div/table/tbody/tr/td[4]/select/option[4]")
+# Find the element for year of results using XPath and click it (year)
+element3 = driver.find_element(By.XPATH, "/html/body/div[4]/table/tbody/tr[3]/td/table/tbody/tr[2]/td[2]/table/tbody/tr/td/div/div/div/table[2]/tbody/tr/td/form/table[1]/tbody/tr[3]/td[3]/span/select/option[17]")
 element3.click()
+
+time.sleep(4)  # Mimic human delay
 
 # Wait for the input field to appear after clicking the element
 input_element = driver.find_element(By.XPATH, "/html/body/div[4]/table/tbody/tr[3]/td/table/tbody/tr[2]/td[2]/table/tbody/tr/td/div/div/div/table[2]/tbody/tr/td/form/table[1]/tbody/tr[1]/td[2]/input")
@@ -55,13 +57,13 @@ input_element.send_keys("Bismarck Martinez")
 checkbox1 = driver.find_element(By.XPATH, "/html/body/div[4]/table/tbody/tr[3]/td/table/tbody/tr[2]/td[2]/table/tbody/tr/td/div/div/div/table[2]/tbody/tr/td/form/table[2]/tbody/tr[27]/td[2]/table/tbody/tr[1]/td[4]/label/input")
 checkbox1.click()
 
-# Check the second checkbox using full XPath
-checkbox2 = driver.find_element(By.XPATH, "/html/body/div[4]/table/tbody/tr[3]/td/table/tbody/tr[2]/td[2]/table/tbody/tr/td/div/div/div/table[2]/tbody/tr/td/form/table[1]/tbody/tr[11]/td[2]/table/tbody/tr[1]/td[2]/label/input")
+# Check the second checkbox using full XPath (Adjudicado)
+checkbox2 = driver.find_element(By.XPATH, "/html/body/div[4]/table/tbody/tr[3]/td/table/tbody/tr[2]/td[2]/table/tbody/tr/td/div/div/div/table[2]/tbody/tr/td/form/table[2]/tbody/tr[27]/td[2]/table/tbody/tr[3]/td[2]/label/input")
 checkbox2.click()
 
-# Check the third checkbox using full XPath
-checkbox3 = driver.find_element(By.XPATH, "/html/body/div[4]/table/tbody/tr[3]/td/table/tbody/tr[2]/td[2]/table/tbody/tr/td/div/div/div/table[2]/tbody/tr/td/form/table[2]/tbody/tr[27]/td[2]/table/tbody/tr[3]/td[2]/label/input")
-checkbox3.click()
+# Check the third checkbox using full XPath (Adjudicado)
+#checkbox3 = driver.find_element(By.XPATH, "/html/body/div[4]/table/tbody/tr[3]/td/table/tbody/tr[2]/td[2]/table/tbody/tr/td/div/div/div/table[2]/tbody/tr/td/form/table[2]/tbody/tr[27]/td[2]/table/tbody/tr[3]/td[2]/label/input")
+#checkbox3.click()
 
 # Check the fourth checkbox using full XPath
 checkbox4 = driver.find_element(By.XPATH, "/html/body/div[4]/table/tbody/tr[3]/td/table/tbody/tr[2]/td[2]/table/tbody/tr/td/div/div/div/table[2]/tbody/tr/td/form/table[2]/tbody/tr[29]/td[2]/input")
@@ -69,28 +71,30 @@ checkbox4.click()
 
 # Select the  year from 19 to 14
 # Find the dropdown menu using the full XPATH
-dropdown_element = driver.find_element(By.XPATH, "/html/body/div[4]/table/tbody/tr[3]/td/table/tbody/tr[2]/td[2]/table/tbody/tr/td/div/div/div/table[2]/tbody/tr/td/form/table[1]/tbody/tr[3]/td[3]/span/select")
+#dropdown_element = driver.find_element(By.XPATH, "/html/body/div[4]/table/tbody/tr[3]/td/table/tbody/tr[2]/td[2]/table/tbody/tr/td/div/div/div/table[2]/tbody/tr/td/form/table[1]/tbody/tr[3]/td[3]/span/select")
 
 # Wrap the element in a Select object
-dropdown = Select(dropdown_element)
+#dropdown = Select(dropdown_element)
 
 # Select the option by index (indexing starts from 0, so 19th option is index 18)
-dropdown.select_by_index(19)
+#dropdown.select_by_index(16)
 
-## Find the dropdown menu using the full XPATH
+## Find the dropdown menu using the full XPATH (alcaldía)
 dropdown_element2 = driver.find_element(By.XPATH, "/html/body/div[4]/table/tbody/tr[3]/td/table/tbody/tr[2]/td[2]/table/tbody/tr/td/div/div/div/table[2]/tbody/tr/td/form/table[2]/tbody/tr[8]/td[2]/select")
 
 # Wrap the element in a Select object
 dropdown = Select(dropdown_element2)
 
-# Select the option by visible text
+# Select the option by visible text (select by text entered)
 dropdown.select_by_visible_text("Alcaldía Managua")
+
+time.sleep(4)  # Mimic human delay
 
 # Hit the Search button using full XPath
 element4 = driver.find_element(By.XPATH, "/html/body/div[4]/table/tbody/tr[3]/td/table/tbody/tr[2]/td[2]/table/tbody/tr/td/div/div/div/table[2]/tbody/tr/td/form/table[3]/tbody/tr/td[1]/input")
 element4.click()
 
-#time.sleep(4)  # Mimic human delay
+time.sleep(4)  # Mimic human delay
 
 # Wait until the contents are loaded
 WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.XPATH, "/html/body/div[4]/table/tbody/tr[3]/td/table/tbody/tr[2]/td[2]/table/tbody/tr/td/div/div/div/form[2]/table[1]/tbody/tr[3]/td/table")))
@@ -105,56 +109,60 @@ driver.quit()
 
 import re
 import json
+text = scraped_content
 
-# Function to parse the text
-def parse_text(scraped_text):
-    pattern = re.compile(
-        r'(LICITACION PUBLICA|CONTRATACION SIMPLIFICADA)\n'
-        r'(\d{1,2}/20\d{2})\n'  # Matches a sequence starting with 1-2 digits followed by "/20" and two more digits
-        r'Estado:\n(.*?)\n'
-        r'Código SIGAF:\n#.*?\n'
-        r'Publicación:\n(.*?)\n'
-        r'Cierre:\n(.*?)\n'
-        r'Última Actualización:\n(.*?)\n'
-        r'(.*?) - (.*?)\n'
-        r'(.*?)\n'
-        r'(.*?)\nMás Datos', re.DOTALL
-    )
+import json
+import re
 
-    entries = pattern.findall(scraped_text)
-    data_list = []
-    for entry in entries:
-        data = {
-            "procedimiento": entry[0],
-            "fecha_procedimiento": entry[1],
-            "estado": entry[2],
-            "codigo_sigaf_fecha_pub": entry[3],
-            "fecha_cierre": entry[4],
-            "última_actualización": entry[5],
-            "alcaldía": entry[6],
-            "unidad": entry[7],
-            "concepto": entry[8],
-            "descripción": entry[9]
-        }
-        data_list.append(data)
-    return data_list  # Moved return statement outside the loop
-# Function to save data to a JSON file
-def save_to_json(data, filepath='scraped_data.json'):
-    try:
-        with open(filepath, 'r+') as file:
-            existing_data = json.load(file)
-            existing_data.extend(data)
-            file.seek(0)
-            json.dump(existing_data, file, indent=4)
-    except FileNotFoundError:
-        with open(filepath, 'w') as file:
-            json.dump(data, file, indent=4)
+def extract_patterns_and_append_to_json(text, json_file_path):
+    # Define the regex pattern to extract details
+    pattern = re.compile(r"""
+        LICITACION\sPUBLICA\s(\d+/\d+)\n
+        Estado:\n(\w+)\n
+        Código\sSIGAF:\n(\#)\n
+        Publicación:\n(\d{2}/\d{2}/\d{4})\n
+        Cierre:\n(\d{2}/\d{2}/\d{4}\s\d{2}:\d{2}:\d{2}\s(?:AM|PM))\n
+        Última\sActualización:\n(\d{2}/\d{2}/\d{4}\s\d{2}:\d{2}:\d{2}\s(?:AM|PM))\n
+        Alcaldía\sManagua\s\(
+        Alcaldía\sManagua
+        \)\s-\sUnidad\sde\sAdquisición\sMANAGUA\n
+        ([^\n]+)\n
+        (.+?)\nMás\sDatos
+    """, re.VERBOSE | re.DOTALL)
 
-# Example usage of the functions
-# Make sure to define 'scraped_content' or pass a string directly
-#scraped_data = scraped_content
-parsed_data = parse_text(scraped_content)
-save_to_json(parsed_data)
+    matches = pattern.findall(text)
+    
+    # Structure the extracted data
+    extracted_data = []
+    for match in matches:
+        extracted_data.append({
+            "licitacion": match[0],
+            "estado": match[1],
+            "codigo_sigaf": match[2],
+            "publicacion": match[3],
+            "cierre": match[4],
+            "ultima_actualizacion": match[5],
+            "unidad_adquisicion": "Alcaldía Managua - Unidad de Adquisición MANAGUA",
+            "servicios": match[6],
+            "programa": match[7]
+        })
+
+    # Load the existing JSON file
+    with open(json_file_path, 'r', encoding='utf-8') as file:
+        existing_data = json.load(file)
+
+    # Append the new data to the existing JSON data
+    existing_data.extend(extracted_data)
+
+    # Save the updated JSON file
+    with open(json_file_path, 'w', encoding='utf-8') as file:
+        json.dump(existing_data, file, ensure_ascii=False, indent=4)
+
+text = scraped_content
+
+json_file_path = 'scraped_data.json'
+extract_patterns_and_append_to_json(text, json_file_path)
+
 
 
 
