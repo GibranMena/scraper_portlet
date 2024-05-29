@@ -85,7 +85,7 @@ dropdown_element2 = driver.find_element(By.XPATH, "/html/body/div[4]/table/tbody
 # Wrap the element in a Select object
 dropdown = Select(dropdown_element2)
 
-# Select the option by visible text (select by text entered)
+# Select the option by visible text (select by text entered) Alcaldía
 dropdown.select_by_visible_text("Alcaldía Managua")
 
 time.sleep(4)  # Mimic human delay
