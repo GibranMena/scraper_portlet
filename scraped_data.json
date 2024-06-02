@@ -274,5 +274,60 @@
         "unidad_adquisicion": "Alcaldía Managua - Unidad de Adquisición MANAGUA",
         "servicios": "Servicios de construcción de edificaciones residenciales (72110000)",
         "programa": "PROGRAMA BISMARCK MARTINEZ VIVIENDA SOCIAL, COMPONENTE: CONSTRUCCIÓN DE TERRAZAS Y SISTEMA HIDROSANITARIO DE 46 LOTES ADICIONALES EN URBANIZACIÓN FLOR DE PINO"
+    },
+    {
+        "licitacion": "230/2021",
+        "estado": "Ejecución",
+        "codigo_sigaf": "#",
+        "publicacion": "05/10/2021",
+        "cierre": "04/11/2021 08:30:00 AM",
+        "ultima_actualizacion": "13/12/2021 10:54:23 AM",
+        "unidad_adquisicion": "Alcaldía Managua - Unidad de Adquisición MANAGUA",
+        "servicios": "Estructuras y edificios permanentes (95120000)",
+        "programa": "PROGRAMA BISMARCK MARTINEZ, VIVIENDA SOCIAL URBANIZACION VILLA SANTIAGO"
+    },
+    {
+        "licitacion": "144/2021",
+        "estado": "Ejecución",
+        "codigo_sigaf": "#",
+        "publicacion": "08/04/2021",
+        "cierre": "17/05/2021 01:45:00 PM",
+        "ultima_actualizacion": "24/09/2021 09:22:00 AM",
+        "unidad_adquisicion": "Alcaldía Managua - Unidad de Adquisición MANAGUA",
+        "servicios": "Servicios de mantenimiento y reparaciones de construcciones e instalaciones (72100000)",
+        "programa": "SERVICIO DE MANO DE OBRA PARA LA INSTALACIÓN DE EQUIPOS ELECTROMECÁNICOS EN PLANTA DE TRATAMIENTO DE AGUAS RESIDUALES (TIPO FAST), PARA EL PROGRAMA BISMARCK MARTINEZ, VIVIENDA SOCIAL, URBANIZACIÓN VILLA JERUSALÉN."
+    },
+    {
+        "licitacion": "138/2021",
+        "estado": "Ejecución",
+        "codigo_sigaf": "#",
+        "publicacion": "08/04/2021",
+        "cierre": "10/05/2021 10:30:00 AM",
+        "ultima_actualizacion": "05/10/2021 11:24:25 AM",
+        "unidad_adquisicion": "Alcaldía Managua - Unidad de Adquisición MANAGUA",
+        "servicios": "Estructuras y edificios permanentes (95120000)",
+        "programa": "CONSTRUCCIÓN DE 2,400 VIVIENDAS SOCIALES PROYECTO BISMARCK MARTINEZ"
+    },
+    {
+        "licitacion": "171/2020",
+        "estado": "Ejecución",
+        "codigo_sigaf": "#",
+        "publicacion": "01/10/2020",
+        "cierre": "03/11/2020 10:15:00 AM",
+        "ultima_actualizacion": "30/12/2020 02:57:24 PM",
+        "unidad_adquisicion": "Alcaldía Managua - Unidad de Adquisición MANAGUA",
+        "servicios": "Servicios de construcción de edificaciones no residenciales (72120000)",
+        "programa": "CONSTRUCCIÓN, MANTENIMIENTO Y REPARACIÓN DE TANQUE - SERVICIOS DE CONSTRUCCION DE TANQUE DE ALMACENAMIENTO DE AGUA POTABLE - LOTIFICACION BISMARCK MARTINEZ, VILLA JERUSALEN, CAPACIDAD 520 M3."
+    },
+    {
+        "licitacion": "136/2020",
+        "estado": "Ejecución",
+        "codigo_sigaf": "#",
+        "publicacion": "16/07/2020",
+        "cierre": "18/08/2020 09:00:00 AM",
+        "ultima_actualizacion": "29/12/2020 03:23:50 PM",
+        "unidad_adquisicion": "Alcaldía Managua - Unidad de Adquisición MANAGUA",
+        "servicios": "Servicios de construcción de edificaciones no residenciales (72120000)",
+        "programa": "PROGRAMA DE VIVIENDAS SOCIAL BISMARCK MARTINEZ COMPONENTE 3: CONSTRUCCION DE VIVIENDAS SOCIALES SEGUNDA ETAPA"
     }
 ]
