@@ -15,7 +15,7 @@ import re
 import json
 
 # Setup Chrome Options
-options = webdriver.ChromeOptions()
+options = Options()
 options.add_argument("--user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3")
 options.add_argument("--disable-notifications")
 options.add_argument("--disable-infobars")
@@ -28,10 +28,14 @@ options.add_argument("--no-sandbox")
 service = Service(ChromeDriverManager().install())
 
 # Create WebDriver object with the above options
-driver = webdriver.Chrome(service=service, options=options)
+try:
+    driver = webdriver.Chrome(service=service, options=options)
+except Exception as e:
+    print(f"Failed to initialize WebDriver: {e}")
+    exit(1)
 
 # List of years and terms
-years = list(range(14, 20))
+years = ["14", "15", "16", "17", "18", "19", "20"]
 terms = [
     "Alcaldía Managua", "Alcaldía Ciudad Sandino", "Alcaldía El Crucero", "Alcaldía Tipitapa", 
     "Alcaldía Mateare", "Alcaldía Ticuantepe", "Alcaldía San Rafael del Sur", "Alcaldía Masaya", 
@@ -43,8 +47,10 @@ terms = [
     "Alcaldía Bluefields", "Alcaldía Puerto Cabezas", "Instituto de la Vivienda Urbana y Rural"
 ]
 
+initial_url = "https://www.gestion.nicaraguacompra.gob.ni/siscae/portal/adquisiciones-gestion/busqueda?accion=todos&usr_ua_id=todos"
+
 # Navigate to the initial webpage
-driver.get("https://www.gestion.nicaraguacompra.gob.ni/siscae/portal/adquisiciones-gestion/busqueda?accion=todos&usr_ua_id=todos")
+driver.get(initial_url)
 
 # Click on the first link for Advanced Search
 element = driver.find_element(By.CSS_SELECTOR, "#busqSimpleForm\:Pluto__adquisiciones_gestion_portlet_busquedaProcedimientoPortlet__id22")
@@ -52,31 +58,37 @@ element.click()
 
 # Function to extract patterns and append to JSON
 def extract_patterns_and_append_to_json(text, json_file_path):
-    pattern = re.compile(r"""
-        LICITACION\sPUBLICA\s(\d+/\d+)\n
+    pattern = re.compile(
+        r"""
+        Procedimiento\sDetalles\sAcciones\n([^\n]+)\n
+        ([^\n]+)\n
         Estado:\n(\w+)\n
         Código\sSIGAF:\n(\#)\n
         Publicación:\n(\d{2}/\d{2}/\d{4})\n
         Cierre:\n(\d{2}/\d{2}/\d{4}\s\d{2}:\d{2}:\d{2}\s(?:AM|PM))\n
         Última\sActualización:\n(\d{2}/\d{2}/\d{4}\s\d{2}:\d{2}:\d{2}\s(?:AM|PM))\n
-        Alcaldía\sManagua\s\([^\n]+\)\s-\sUnidad\sde\sAdquisición\sMANAGUA\n
+        Alcaldía\s([^\n]+)\s\([^\n]+\)\s-\sUnidad\sde\sAdquisiciones?\s[^\n]+\n
         ([^\n]+)\n
         (.+?)\nMás\sDatos
-    """, re.VERBOSE | re.DOTALL)
+        """,
+        re.VERBOSE | re.DOTALL
+    )
 
     matches = pattern.findall(text)
     
     extracted_data = []
     for match in matches:
         extracted_data.append({
-            "licitacion": match[0],
-            "estado": match[1],
-            "codigo_sigaf": match[2],
-            "publicacion": match[3],
-            "cierre": match[4],
-            "ultima_actualizacion": match[5],
-            "servicios": match[6],
-            "programa": match[7]
+            "tipo_procedimiento": match[0],
+            "licitacion": match[1],
+            "estado": match[2],
+            "codigo_sigaf": match[3],
+            "publicacion": match[4],
+            "cierre": match[5],
+            "ultima_actualizacion": match[6],
+            "alcaldia": match[7],
+            "servicios": match[8],
+            "programa": match[9]
         })
 
     try:
@@ -93,43 +105,62 @@ def extract_patterns_and_append_to_json(text, json_file_path):
 # Loop through each year and term
 for year in years:
     for term in terms:
-        # Select the year
-        year_xpath = f"/html/body/div[4]/table/tbody/tr[3]/td/table/tbody/tr[2]/td[2]/table/tbody/tr/td/div/div/div/table[2]/tbody/tr/td/form/table[1]/tbody/tr[3]/td[3]/span/select/option[{year}]"
-        element3 = driver.find_element(By.XPATH, year_xpath)
-        element3.click()
+        try:
+            # Navigate to the initial webpage
+            driver.get(initial_url)
+            
+            # Click on the first link for Advanced Search
+            element = driver.find_element(By.CSS_SELECTOR, "#busqSimpleForm\:Pluto__adquisiciones_gestion_portlet_busquedaProcedimientoPortlet__id22")
+            element.click()
 
-        time.sleep(2)  # Mimic human delay
+            # Select the year using XPath
+            year_xpath = f"/html/body/div[4]/table/tbody/tr[3]/td/table/tbody/tr[2]/td[2]/table/tbody/tr/td/div/div/div/table[2]/tbody/tr/td/form/table[1]/tbody/tr[3]/td[3]/span/select/option[{year}]"
+            element3 = driver.find_element(By.XPATH, year_xpath)
+            element3.click()
 
-        # Select the term from dropdown
-        dropdown_element2 = driver.find_element(By.XPATH, "/html/body/div[4]/table/tbody/tr[3]/td/table/tbody/tr[2]/td[2]/table/tbody/tr/td/div/div/div/table[2]/tbody/tr[8]/td[2]/select")
-        dropdown = Select(dropdown_element2)
-        dropdown.select_by_visible_text(term)
+            time.sleep(2)  # Mimic human delay
 
-        time.sleep(2)  # Mimic human delay
+            # Select the term from dropdown
+            dropdown_element2 = driver.find_element(By.XPATH, "/html/body/div[4]/table/tbody/tr[3]/td/table/tbody/tr[2]/td[2]/table/tbody/tr/td/div/div/div/table[2]/tbody/tr/td/form/table[2]/tbody/tr[8]/td[2]/select")
+            dropdown = Select(dropdown_element2)
+            dropdown.select_by_visible_text(term)
 
-        # Select the checkboxes
-        checkbox1 = driver.find_element(By.XPATH, "/html/body/div[4]/table/tbody/tr[3]/td/table/tbody/tr[2]/td[2]/table/tbody/tr/td/div/div/div/table[2]/tbody/tr/td/form/table[2]/tbody/tr[27]/td[2]/table/tbody/tr[1]/td[4]/label/input")
-        checkbox1.click()
+            time.sleep(2)  # Mimic human delay
 
-        checkbox2 = driver.find_element(By.XPATH, "/html/body/div[4]/table/tbody/tr[3]/td/table/tbody/tr[2]/td[2]/table/tbody/tr/td/div/div/div/table[2]/tbody/tr[27]/td[2]/table/tbody/tr[3]/td[2]/label/input")
-        checkbox2.click()
+            # Enter "Bismarck Martinez" into the search input
+            search_input = driver.find_element(By.XPATH, "/html/body/div[4]/table/tbody/tr[3]/td/table/tbody/tr[2]/td[2]/table/tbody/tr/td/div/div/div/table[2]/tbody/tr/td/form/table[1]/tbody/tr[1]/td[2]/input")
+            search_input.clear()
+            search_input.send_keys("Bismarck")
 
-        checkbox4 = driver.find_element(By.XPATH, "/html/body/div[4]/table/tbody/tr[3]/td/table/tbody/tr[2]/td[2]/table/tbody/tr/td/div/div/div/table[2]/tbody/tr/td/form/table[2]/tbody/tr[29]/td[2]/input")
-        checkbox4.click()
+            time.sleep(2)  # Mimic human delay
 
-        # Click the search button
-        element4 = driver.find_element(By.XPATH, "/html/body/div[4]/table/tbody/tr[3]/td/table/tbody/tr[2]/td[2]/table/tbody/tr/td/div/div/div/table[2]/tbody/tr/td/form/table[3]/tbody/tr/td[1]/input")
-        element4.click()
+            # Select the checkboxes
+            checkbox1 = driver.find_element(By.XPATH, "/html/body/div[4]/table/tbody/tr[3]/td/table/tbody/tr[2]/td[2]/table/tbody/tr/td/div/div/div/table[2]/tbody/tr/td/form/table[2]/tbody/tr[27]/td[2]/table/tbody/tr[1]/td[4]/label/input")
+            checkbox1.click()
 
-        time.sleep(4)  # Mimic human delay
+            checkbox2 = driver.find_element(By.XPATH, "/html/body/div[4]/table/tbody/tr[3]/td/table/tbody/tr[2]/td[2]/table/tbody/tr/td/div/div/div/table[2]/tbody/tr/td/form/table[2]/tbody/tr[27]/td[2]/table/tbody/tr[3]/td[2]/label/input")
+            checkbox2.click()
 
-        # Wait for the content to load and scrape it
-        WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.XPATH, "/html/body/div[4]/table/tbody/tr[3]/td/table/tbody/tr[2]/td[2]/table/tbody/tr/td/div/div/div/form[2]/table[1]/tbody/tr[3]/td/table")))
-        scraped_content = driver.find_element(By.XPATH, "/html/body/div[4]/table/tbody/tr[3]/td/table/tbody/tr[2]/td[2]/table/tbody/tr/td/div/div/div/form[2]/table[1]/tbody/tr[3]/td").text
+            checkbox4 = driver.find_element(By.XPATH, "/html/body/div[4]/table/tbody/tr[3]/td/table/tbody/tr[2]/td[2]/table/tbody/tr/td/div/div/div/table[2]/tbody/tr/td/form/table[2]/tbody/tr[29]/td[2]/input")
+            checkbox4.click()
 
-        # Append the scraped content to the JSON file
-        json_file_path = 'scraped_data.json'
-        extract_patterns_and_append_to_json(scraped_content, json_file_path)
+            # Click the search button
+            element4 = driver.find_element(By.XPATH, "/html/body/div[4]/table/tbody/tr[3]/td/table/tbody/tr[2]/td[2]/table/tbody/tr/td/div/div/div/table[2]/tbody/tr/td/form/table[3]/tbody/tr/td[1]/input")
+            element4.click()
+
+            time.sleep(4)  # Mimic human delay
+
+            # Wait for the content to load and scrape it
+            WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.XPATH, "/html/body/div[4]/table/tbody/tr[3]/td/table/tbody/tr[2]/td[2]/table/tbody/tr/td/div/div/div/form[2]/table[1]/tbody/tr[3]/td/table")))
+            scraped_content = driver.find_element(By.XPATH, "/html/body/div[4]/table/tbody/tr[3]/td/table/tbody/tr[2]/td[2]/table/tbody/tr/td/div/div/div/form[2]/table[1]/tbody/tr[3]/td").text
+
+            # Append the scraped content to the JSON file
+            json_file_path = 'scraped_data.json'
+            extract_patterns_and_append_to_json(scraped_content, json_file_path)
+        
+        except Exception as e:
+            print(f"An error occurred: {e}")
+            continue
 
 # Quit the driver after completing the loop
 driver.quit()

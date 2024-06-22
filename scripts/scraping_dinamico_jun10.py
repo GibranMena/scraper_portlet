@@ -42,7 +42,7 @@ element2 = driver.find_element(By.XPATH, "/html/body/div[4]/table/tbody/tr[3]/td
 element2.click()
 
 # Find the element for year of results using XPath and click it (year)
-element3 = driver.find_element(By.XPATH, "/html/body/div[4]/table/tbody/tr[3]/td/table/tbody/tr[2]/td[2]/table/tbody/tr/td/div/div/div/table[2]/tbody/tr/td/form/table[1]/tbody/tr[3]/td[3]/span/select/option[17]")
+element3 = driver.find_element(By.XPATH, "/html/body/div[4]/table/tbody/tr[3]/td/table/tbody/tr[2]/td[2]/table/tbody/tr/td/div/div/div/table[2]/tbody/tr/td/form/table[1]/tbody/tr[3]/td[3]/span/select/option[18]")
 element3.click()
 
 time.sleep(4)  # Mimic human delay
@@ -109,62 +109,58 @@ driver.quit()
 
 import re
 import json
-text = scraped_content
-
-import json
-import re
 import os
 
-def extract_patterns_and_append_to_json(text, json_file_path):
-    # Define the regex pattern to extract details
-    pattern = re.compile(r"""
-        (?<=Procedimiento\sDetalles\sAcciones\n)[^\n]*\n
-        Estado:\n(\w+)\n
-        Código\sSIGAF:\n(\#)\n
-        Publicación:\n(\d{2}/\d{2}/\d{4})\n
-        Cierre:\n(\d{2}/\d{2}/\d{4}\s\d{2}:\d{2}:\d{2}\s(?:AM|PM))\n
-        Última\sActualización:\n(\d{2}/\d{2}/\d{4}\s\d{2}:\d{2}:\d{2}\s(?:AM|PM))\n
-        Alcaldía\sManagua\s\(Alcaldía\sManagua\)\s-\sUnidad\sde\sAdquisición\sMANAGUA\n
-        ([^\n]+)\n(.+?)\nMás\sDatos
-    """, re.VERBOSE | re.DOTALL)
-
-    matches = pattern.findall(text)
-    
-    # Structure the extracted data
-    extracted_data = []
-    for match in matches:
-        extracted_data.append({
-            "licitacion": match[0],
-            "estado": match[1],
-            "codigo_sigaf": match[2],
-            "publicacion": match[3],
-            "cierre": match[4],
-            "ultima_actualizacion": match[5],
-            "unidad_adquisicion": "Alcaldía Managua - Unidad de Adquisición MANAGUA",
-            "servicios": match[6],
-            "programa": match[7]
-        })
-
-    # Check if the JSON file exists, and load or initialize data
-    if os.path.exists(json_file_path):
-        with open(json_file_path, 'r', encoding='utf-8') as file:
-            existing_data = json.load(file)
-    else:
-        existing_data = []
-
-    # Append the new data to the existing JSON data
-    existing_data.extend(extracted_data)
-
-    # Save the updated JSON file
-    with open(json_file_path, 'w', encoding='utf-8') as file:
-        json.dump(existing_data, file, ensure_ascii=False, indent=4)
+input_string = scraped_content
 
 
-# Path to the JSON file
-json_file_path = 'scraped_data.json'
+def parse_string(input_string):
+    pattern = re.compile(r'Procedimiento\sDetalles\sAcciones\n(.*?)\n'
+                          r'Estado:\n(.*?)\n'
+                          r'Código\sSIGAF:\n#(.*?)\n'
+                          r'Publicación:\n(.*?)\n'
+                          r'Cierre:\n(.*?)\n'
+                          r'Última\sActualización:\n(.*?)\n'
+                          r'(Alcaldía.*?)\n'  # Capture the entire "Alcaldía" line
+                          r'(.*?)\n'  # Capture the line after "Alcaldía"
+                          r'(.*?)\nMás\sDatos', re.DOTALL)
 
-# Execute the function
+    results = []
+    for match in pattern.finditer(input_string):
+        result = {
+            'tipo_de_procedimiento': match.group(1).strip(),
+            'estado': match.group(2).strip(),
+            'codigo_sigaf': match.group(3).strip(),
+            'publicacion': match.group(4).strip(),
+            'cierre': match.group(5).strip(),
+            'última_actualización': match.group(6).strip(),
+            'alcaldia': match.group(7).strip(),  
+            'detalles_procedimiento': match.group(9).strip()
+        }
+        results.append(result)
+
+    return results
+
+# Example usage
+input_string = 'Procedimiento Detalles Acciones\nLICITACION PUBLICA\n267/2023\nEstado:\nEjecución\nCódigo SIGAF:\n#\nPublicación:\n30/10/2023\nCierre:\n29/11/2023 02:00:00 PM\nÚltima Actualización:\n06/12/2023 03:33:37 PM\nAlcaldía Managua (Alcaldía Managua) - Unidad de Adquisiciones\n\nEjecución\nEstructuras y edificios permanentes (95120000)\nPROGRAMA BISMARCK MARTINEZ VIVIENDA SOCIAL, CONSTRUCCIÓN DE OBRAS DE URBANIZACIÓN VILLA JERUSALÉN IV ETAPA (579 LOTES)\nMás Datos\n... (rest of the input string)'
+
+parsed_data = parse_string(input_string)
+print(json.dumps(parsed_data, indent=2, ensure_ascii=False))
+
+# Example usage
+input_string = 'Procedimiento Detalles Acciones\nLICITACION PUBLICA\n267/2023\nEstado:\nEjecución\nCódigo SIGAF:\n#\nPublicación:\n30/10/2023\nCierre:\n29/11/2023 02:00:00 PM\nÚltima Actualización:\n06/12/2023 03:33:37 PM\nAlcaldía Managua (Alcaldía Managua) - Unidad de Adquisición MANAGUA\nEstructuras y edificios permanentes (95120000)\nPROGRAMA BISMARCK MARTINEZ VIVIENDA SOCIAL, CONSTRUCCIÓN DE OBRAS DE URBANIZACIÓN VILLA JERUSALÉN IV ETAPA (579 LOTES)\nMás Datos\n... (rest of the input string)'
+
+parsed_data = parse_string(input_string)
+print(json.dumps(parsed_data, indent=2, ensure_ascii=False))
+
+
+parsed_data = parse_string(text)
+print(json.dumps(parsed_data, indent=2, ensure_ascii=False))
+
+
+json_file_path = 'data_prueba.json'
 extract_patterns_and_append_to_json(text, json_file_path)
+
 
 
 

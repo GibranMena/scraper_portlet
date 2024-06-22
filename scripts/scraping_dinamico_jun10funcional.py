@@ -42,7 +42,7 @@ element2 = driver.find_element(By.XPATH, "/html/body/div[4]/table/tbody/tr[3]/td
 element2.click()
 
 # Find the element for year of results using XPath and click it (year)
-element3 = driver.find_element(By.XPATH, "/html/body/div[4]/table/tbody/tr[3]/td/table/tbody/tr[2]/td[2]/table/tbody/tr/td/div/div/div/table[2]/tbody/tr/td/form/table[1]/tbody/tr[3]/td[3]/span/select/option[17]")
+element3 = driver.find_element(By.XPATH, "/html/body/div[4]/table/tbody/tr[3]/td/table/tbody/tr[2]/td[2]/table/tbody/tr/td/div/div/div/table[2]/tbody/tr/td/form/table[1]/tbody/tr[3]/td[3]/span/select/option[18]")
 element3.click()
 
 time.sleep(4)  # Mimic human delay
@@ -105,71 +105,83 @@ scraped_content = driver.find_element(By.XPATH, "/html/body/div[4]/table/tbody/t
 # Quit the driver
 driver.quit()
 
+text = scraped_content
+
 #Parse data
 
 import re
 import json
-text = scraped_content
-
-import json
-import re
 import os
 
-def extract_patterns_and_append_to_json(text, json_file_path):
-    # Define the regex pattern to extract details
-    pattern = re.compile(r"""
-        (?<=Procedimiento\sDetalles\sAcciones\n)[^\n]*\n
-        Estado:\n(\w+)\n
-        Código\sSIGAF:\n(\#)\n
-        Publicación:\n(\d{2}/\d{2}/\d{4})\n
-        Cierre:\n(\d{2}/\d{2}/\d{4}\s\d{2}:\d{2}:\d{2}\s(?:AM|PM))\n
-        Última\sActualización:\n(\d{2}/\d{2}/\d{4}\s\d{2}:\d{2}:\d{2}\s(?:AM|PM))\n
-        Alcaldía\sManagua\s\(Alcaldía\sManagua\)\s-\sUnidad\sde\sAdquisición\sMANAGUA\n
-        ([^\n]+)\n(.+?)\nMás\sDatos
-    """, re.VERBOSE | re.DOTALL)
+# Define the regular expressions for each element
+regex_patterns = {
+    "tipo_de_procedimiento": re.compile(r'^(.*?)(?=\n|$)', re.DOTALL),
+    "estado": re.compile(r'Estado:\n(.*?)\n', re.DOTALL),
+    "codigo_sigaf": re.compile(r'Código\sSIGAF:\n#(.*?)\n', re.DOTALL),
+    "publicacion": re.compile(r'Publicación:\n(\d{2}/\d{2}/\d{4})\n', re.DOTALL),
+    "cierre": re.compile(r'Cierre:\n(\d{2}/\d{2}/\d{4} \d{2}:\d{2}:\d{2} [APM]{2})\n', re.DOTALL),
+    "ultima_actualizacion": re.compile(r'Última\sActualización:\n(\d{2}/\d{2}/\d{4} \d{2}:\d{2}:\d{2} [APM]{2})\n', re.DOTALL),
+    "alcaldia": re.compile(r'Alcaldía\s(.*?)\n', re.DOTALL),
+    "detalles_procedimiento": re.compile(r'(?:Alcaldía\s.*?\n)(.*?)(?=Más\sDatos|$)', re.DOTALL)
+}
 
-    matches = pattern.findall(text)
+# Function to parse the text and extract the required elements
+def parse_text(text):
+    parsed_data = []
+    # Split the text into segments
+    segments = re.split(r'Procedimiento\sDetalles\sAcciones\n|\nMás\sDatos\n', text)
+    for segment in segments:
+        if segment.strip():  # Skip empty segments
+            tipo_de_procedimiento_match = regex_patterns["tipo_de_procedimiento"].search(segment)
+            tipo_de_procedimiento = tipo_de_procedimiento_match.group(1).strip() if tipo_de_procedimiento_match else None
+            estado_match = regex_patterns["estado"].search(segment)
+            estado = estado_match.group(1).strip() if estado_match else None
+            codigo_sigaf_match = regex_patterns["codigo_sigaf"].search(segment)
+            codigo_sigaf = codigo_sigaf_match.group(1).strip() if codigo_sigaf_match else None
+            publicacion_match = regex_patterns["publicacion"].search(segment)
+            publicacion = publicacion_match.group(1).strip() if publicacion_match else None
+            cierre_match = regex_patterns["cierre"].search(segment)
+            cierre = cierre_match.group(1).strip() if cierre_match else None
+            ultima_actualizacion_match = regex_patterns["ultima_actualizacion"].search(segment)
+            ultima_actualizacion = ultima_actualizacion_match.group(1).strip() if ultima_actualizacion_match else None
+            alcaldia_match = regex_patterns["alcaldia"].search(segment)
+            alcaldia = alcaldia_match.group(1).strip() if alcaldia_match else None
+            detalles_procedimiento_match = regex_patterns["detalles_procedimiento"].search(segment)
+            detalles_procedimiento = detalles_procedimiento_match.group(1).strip() if detalles_procedimiento_match else None
+
+            parsed_data.append({
+                "tipo_de_procedimiento": tipo_de_procedimiento,
+                "estado": estado,
+                "codigo_sigaf": codigo_sigaf,
+                "publicacion": publicacion,
+                "cierre": cierre,
+                "ultima_actualizacion": ultima_actualizacion,
+                "alcaldia": alcaldia,
+                "detalles_procedimiento": detalles_procedimiento
+            })
+    return parsed_data
+
+# Function to check if a JSON file exists, create it if it doesn't, and append the parsed data
+def append_to_json_file(file_path, data):
+    if not os.path.exists(file_path):
+        with open(file_path, 'w', encoding='utf-8') as file:
+            json.dump([], file)
     
-    # Structure the extracted data
-    extracted_data = []
-    for match in matches:
-        extracted_data.append({
-            "licitacion": match[0],
-            "estado": match[1],
-            "codigo_sigaf": match[2],
-            "publicacion": match[3],
-            "cierre": match[4],
-            "ultima_actualizacion": match[5],
-            "unidad_adquisicion": "Alcaldía Managua - Unidad de Adquisición MANAGUA",
-            "servicios": match[6],
-            "programa": match[7]
-        })
+    with open(file_path, 'r+', encoding='utf-8') as file:
+        file_data = json.load(file)
+        file_data.extend(data)
+        file.seek(0)
+        json.dump(file_data, file, indent=4, ensure_ascii=False)
 
-    # Check if the JSON file exists, and load or initialize data
-    if os.path.exists(json_file_path):
-        with open(json_file_path, 'r', encoding='utf-8') as file:
-            existing_data = json.load(file)
-    else:
-        existing_data = []
+# Parse the text
+parsed_data = parse_text(text)
 
-    # Append the new data to the existing JSON data
-    existing_data.extend(extracted_data)
+# Print the parsed data
+print(json.dumps(parsed_data, indent=4, ensure_ascii=False))
 
-    # Save the updated JSON file
-    with open(json_file_path, 'w', encoding='utf-8') as file:
-        json.dump(existing_data, file, ensure_ascii=False, indent=4)
-
-
-# Path to the JSON file
-json_file_path = 'scraped_data.json'
-
-# Execute the function
-extract_patterns_and_append_to_json(text, json_file_path)
-
-
-
-
-
+# Append the parsed data to the JSON file
+json_file_path = 'parsed_data.json'
+append_to_json_file(json_file_path, parsed_data)
 
 
 

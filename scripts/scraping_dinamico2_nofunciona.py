@@ -113,57 +113,51 @@ text = scraped_content
 
 import json
 import re
-import os
 
 def extract_patterns_and_append_to_json(text, json_file_path):
-    # Define the regex pattern to extract details
     pattern = re.compile(r"""
-        (?<=Procedimiento\sDetalles\sAcciones\n)[^\n]*\n
+        (LICITACION\sPUBLICA|CONTRATACION\sSIMPLIFICADA)\s(\d+/\d+)\n
         Estado:\n(\w+)\n
         Código\sSIGAF:\n(\#)\n
         Publicación:\n(\d{2}/\d{2}/\d{4})\n
         Cierre:\n(\d{2}/\d{2}/\d{4}\s\d{2}:\d{2}:\d{2}\s(?:AM|PM))\n
         Última\sActualización:\n(\d{2}/\d{2}/\d{4}\s\d{2}:\d{2}:\d{2}\s(?:AM|PM))\n
-        Alcaldía\sManagua\s\(Alcaldía\sManagua\)\s-\sUnidad\sde\sAdquisición\sMANAGUA\n
-        ([^\n]+)\n(.+?)\nMás\sDatos
+        Alcaldía\s([^\n]+)\s\([^\n]+\)\s-\sUnidad\sde\sAdquisiciones?\s[^\n]+\n
+        ([^\n]+)\n
+        (.+?)\nMás\sDatos
     """, re.VERBOSE | re.DOTALL)
 
     matches = pattern.findall(text)
     
-    # Structure the extracted data
+    
     extracted_data = []
     for match in matches:
         extracted_data.append({
-            "licitacion": match[0],
-            "estado": match[1],
-            "codigo_sigaf": match[2],
-            "publicacion": match[3],
-            "cierre": match[4],
-            "ultima_actualizacion": match[5],
-            "unidad_adquisicion": "Alcaldía Managua - Unidad de Adquisición MANAGUA",
-            "servicios": match[6],
-            "programa": match[7]
+            "tipo_procedimiento": match[0],
+            "licitacion": match[1],
+            "estado": match[2],
+            "codigo_sigaf": match[3],
+            "publicacion": match[4],
+            "cierre": match[5],
+            "ultima_actualizacion": match[6],
+            "alcaldia": match[7],
+            "servicios": match[8],
+            "programa": match[9]
         })
 
-    # Check if the JSON file exists, and load or initialize data
-    if os.path.exists(json_file_path):
+    try:
         with open(json_file_path, 'r', encoding='utf-8') as file:
             existing_data = json.load(file)
-    else:
+    except FileNotFoundError:
         existing_data = []
 
-    # Append the new data to the existing JSON data
     existing_data.extend(extracted_data)
 
-    # Save the updated JSON file
     with open(json_file_path, 'w', encoding='utf-8') as file:
         json.dump(existing_data, file, ensure_ascii=False, indent=4)
 
 
-# Path to the JSON file
-json_file_path = 'scraped_data.json'
-
-# Execute the function
+json_file_path = 'scraped_data2.json'
 extract_patterns_and_append_to_json(text, json_file_path)
 
 
